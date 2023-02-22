@@ -1,0 +1,1 @@
+This is a team project on simple shell. we are tasked with writing our own shell program to perform some specific task as given.At the end of this project, we must have been able to come up with our own shell files.
