@@ -1,42 +1,42 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- *path_search - makes complete path from path.
- * @cmd: command to make complete path from path.
- * Return: complete path.
- */
-char *path_search(char *cmd)
+  * search_path - Make a complete path
+  * @path: Command to make path from
+  * Return: complete path
+  */
+char *search_path(char *path)
 {
-	char *path = NULL, *token = NULL, ch = '/';
-	char *dirs[1024];
-	int i;
-	char *cwd = getcwd(NULL, 0);
-	struct stat sb;
+char *paths = NULL, *token = NULL, ch = '/';
+char *dirs[1024];
+int i;
+char *cwd = getcwd(NULL, 0);
+struct stat sb;
 
-	path = getenv("PATH");
-	token = strtok(path, ":");
-	if (dirs == NULL)
-	i = 0;
-	while (token != NULL)
-	{
-		dirs[i] = token;
-		token = strtok(NULL, ":");
-		i++;
-	}
-	dirs[i] = NULL;
+paths = getenv("PATH");
+token = strtok(paths, ":");
+if (dirs == NULL)
+i = 0;
+while (token != NULL)
+{
+dirs[i] = token;
+token = strtok(NULL, ":");
+i++;
+}
+dirs[i] = NULL;
 
-	i = 0;
-	while (dirs[i] != NULL)
-	{
-		chdir(dirs[i]);
-		if (stat(cmd, &sb) == 0)
-		{
-			dirs[i] = _strncat(dirs[i], &ch, 1);
-			cmd = _strcat(dirs[i], cmd);
-			break;
-		}
-		i++;
-	}
-	chdir(cwd);
-	return (cmd);
+i = 0;
+while (dirs[i] != NULL)
+{
+chdir(dirs[i]);
+if (stat(path, &sb) == 0)
+{
+dirs[i] = _strncat(dirs[i], &ch, 1);
+path = _strcat(dirs[i], path);
+break;
+}
+i++;
+}
+chdir(cwd);
+return (path);
 }

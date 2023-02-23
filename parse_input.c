@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * parse_input_string - splits string entered by the user.

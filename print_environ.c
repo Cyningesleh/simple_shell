@@ -1,14 +1,13 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * print_environ - prints all environment variables.
- * Return: nothing.
+ * print_environ - Print environment variables
  */
+
 void print_environ(void)
 {
-	int x;
+int i = 0;
 
-	x = 0;
-	while (environ[x])
-		printf("%s\n", environ[x++]);
+while (environ[i])
+printf("%s\n", environ[i++]);
 }

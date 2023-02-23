@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * *_strcat - concatenates two strings.
@@ -10,13 +10,21 @@
 
 char *_strcat(char *dest, char *src)
 {
-int i, n;
+char *temp;
 
-n = string_length(dest);
-for (i = 0; i < n && src[i] != '\0'; i++)
+temp = dest;
+
+while (*temp != '\0')
 {
-dest[n + i] = src[i];
+temp++;
 }
-dest[n + i] = '\0';
+
+while (*src != '\0')
+{
+*temp = *src;
+temp++;
+src++;
+}
+*temp = '\0';
 return (dest);
 }

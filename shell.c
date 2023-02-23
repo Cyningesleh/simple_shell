@@ -1,28 +1,26 @@
-#include "shell.h"
+xc#include "main.h"
 /**
- * main - entry point of the program
- * @ac: argument counter
- * @av: argument vector
- * @envp: array of strings.
- * Return: 0
+ * myfunc - Shell program
+ * @ac: Argument count
+ * @av: Argument array
+ * @envp: Environment parameters
  */
-int main(int ac __attribute__((unused)), char *av[], char *envp[])
+void myfunc(int ac __attribute__((unused)), char *av[], char *envp[])
 {
-char *buffer = NULL;
-size_t bufsize = 0;
+char *line = NULL;
+size_t n = 0;
 int status;
 pid_t child_pid;
 
-signal(SIGINT, SIG_IGN);
 while (1)
 {
 if (isatty(STDIN_FILENO))
-printf("~$ ");
-if (getline(&buffer, &bufsize, stdin) == -1)
+write(1, "$ ", 2);
+if (getline(&line, &n, stdin) == -1)
 break;
-if (buffer == NULL)
+if (line == NULL)
 exit(0);
-av = parse_input_string(buffer);
+av = split_args(line);
 if (!av[0])
 {
 free(av);
@@ -34,12 +32,12 @@ print_environ(), free(av);
 continue;
 }
 if (_strcmp(av[0], "exit") == 0)
-free(av), free(buffer), exit(0);
+free(av), free(line), exit(0);
 child_pid = fork();
-if (child_pid == 0)
+if (!child_pid)
 {
 if (_strchr(av[0], '/') == NULL)
-av[0] = path_search(av[0]);
+av[0] = search_path(av[0]);
 if (execve(av[0], av, envp))
 {
 perror("execve"), exit(EXIT_FAILURE);
@@ -48,6 +46,5 @@ break;
 }
 wait(&status), free(av);
 }
-free(buffer);
-return (0);
+free(line);
 }
